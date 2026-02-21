@@ -81,7 +81,7 @@ class VoiceAIManager(private val context: Context) {
 
         // Initialize engines
         val sttOk = sttEngine.initialize(sttPath)
-        val ttsOk = ttsEngine.initialize(context.assets, ttsPath)
+        val ttsOk = ttsEngine.initialize(ttsPath)
 
         isInitialized = sttOk && ttsOk
         Log.d(TAG, "Initialization complete — STT: $sttOk, TTS: $ttsOk")

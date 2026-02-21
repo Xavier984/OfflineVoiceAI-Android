@@ -1,6 +1,5 @@
 package com.xeles.offlinevoiceai.engine
 
-import android.content.res.AssetManager
 import android.media.AudioAttributes
 import android.media.AudioFormat
 import android.media.AudioTrack
@@ -38,12 +37,11 @@ internal class TtsEngine {
     /**
      * Initialize the Sherpa-ONNX TTS engine.
      *
-     * @param assetManager The app's AssetManager (required by Sherpa-ONNX native layer).
-     * @param modelDir     Absolute path to the directory containing the VITS model files
-     *                     (model.onnx, tokens.txt, and optionally espeak-ng-data/, lexicon.txt).
+     * @param modelDir Absolute path to the directory containing the VITS model files
+     *                 (model.onnx, tokens.txt, and optionally espeak-ng-data/, lexicon.txt).
      * @return `true` if initialization succeeded.
      */
-    fun initialize(assetManager: AssetManager, modelDir: String): Boolean {
+    fun initialize(modelDir: String): Boolean {
         return try {
             val vitsConfig = OfflineTtsVitsModelConfig()
             vitsConfig.model = "$modelDir/en_US-amy-low.onnx"
@@ -57,7 +55,7 @@ internal class TtsEngine {
             val ttsConfig = OfflineTtsConfig()
             ttsConfig.model = modelConfig
 
-            tts = OfflineTts(assetManager, ttsConfig)
+            tts = OfflineTts(null, ttsConfig)
             sampleRate = tts!!.sampleRate()
 
             Log.d(TAG, "Sherpa-ONNX TTS initialized. Sample rate: $sampleRate")
